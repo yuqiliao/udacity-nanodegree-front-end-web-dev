@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
     border: 5px solid blue;
     grid-template-columns: 100vw;
     /* grid-auto-flow: row; */
-    grid-template-rows:8vh 92vh 30vh 100vh 90vh 80vh 25vh;
+    grid-template-rows:8vh 92vh 30vh 100vh 90vh 40vh 25vh;
     grid-gap: 0px;
     /* top: 0px;
     right: 0px;
@@ -58,8 +58,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #about {
-  display: flex;
-  border: 1px solid red;
+  border: 1px solid greenyellow;
   
   grid-column: 1/2;
   grid-row: 3/4;
@@ -82,17 +81,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #contact {
-  display: flex;
   border: 1px solid red;
-  
   grid-column: 1/2;
   grid-row: 6/7;
 }
 
 #footer {
-  display: flex;
   border: 1px solid red;
-  
   grid-column: 1/2;
   grid-row: 7/8;
 }
@@ -175,9 +170,9 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     left: 0;
     right: 0; */
-    /* flex-direction: column;
+    flex-direction: column;
     align-items: center;
-    justify-content: center; */
+    justify-content: center;
     padding: 0px;
     background: url("../img/hero-bg2.jpg") bottom right;
     background-size: cover;
@@ -228,6 +223,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: 0.4s;
   color: rgba(255, 255, 255, 0.6);
   animation: up-down 1s ease-in-out infinite alternate-reverse both;
+  text-decoration: none;
 }
 
 #hero .btn-scroll i {
@@ -307,11 +303,10 @@ section {
 /*--------------------------------------------------------------
 # About Me
 --------------------------------------------------------------*/
-#about > .container{
+#about .container{
   margin: 0 20vw 0 20vw;
   /* display: flex;
   border: 1px solid red; */
-  
 }
 
 /*--------------------------------------------------------------
@@ -437,7 +432,7 @@ section {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-/* Add some padding inside the card container */
+/* Add some padding inside the card post */
 .post .container {
   padding: 2px 16px;
 }
@@ -449,6 +444,65 @@ section {
 # Contact Me
 --------------------------------------------------------------*/
 
+/* .contact .container{
+  align-items: center;
+} */
+
+.contact .contact-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 2px solid green;
+  padding: 10px;
+  
+}
+
+
+.contact .info-box {
+  color: #444444;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+  padding: 20px 0 30px 0;
+}
+
+
+.contact .info-box h3 {
+  font-size: 20px;
+  color: #777777;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.contact .info-box p {
+  padding: 0;
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.contact .social-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  color: #687683;
+  line-height: 1;
+  margin: 0 8px;
+  transition: 0.3s;
+  padding: 14px;
+  border-radius: 50px;
+  border: 1px solid #dde1e4;
+}
+
+.contact .social-links a:hover {
+  color: #fff;
+  border-color: #ffb727;
+  background: #ffb727;
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
