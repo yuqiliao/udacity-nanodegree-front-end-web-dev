@@ -5,8 +5,6 @@
 .homepage-container {
     display: grid;
     border: 5px solid blue;
-    /* width: 100vw; */
-    /* grid-auto-flow: row; */
     grid-template-columns: 100vw;
     grid-template-rows:8vh 92vh 30vh 100vh 90vh 40vh 25vh;
     grid-gap: 0px;
