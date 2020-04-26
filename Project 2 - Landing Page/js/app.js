@@ -136,7 +136,7 @@ function scrollToSection(element){
         if(secetionIDsNew[0] === "#") {
             var destinationElementOffsetTop = 0;
         } else {
-            var destinationElementOffsetTop = document.querySelector(secetionIDsNew).offsetTop;
+            var destinationElementOffsetTop = document.querySelector(secetionIDsNew[0]).offsetTop;
         }   
     }
 
