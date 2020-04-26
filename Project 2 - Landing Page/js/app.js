@@ -18,7 +18,7 @@
  * 
 */
 
-// create sectionList object for later use
+// create sectionList object
 const sections= document.querySelectorAll("section");
 
 let sectionIDs = []
@@ -30,12 +30,10 @@ for (section of sections){
     sectionIDs.push(sectionID);
     sectionDataNavs.push(sectionDataNav);
 }
-console.log(sectionIDs)
-console.log(sectionDataNavs)
+
 
 let sectionList = {};
 sectionIDs.forEach((key, i) => sectionList[key] = sectionDataNavs[i]);
-console.log(sectionList);
 
 // get navbar__list id
 const navbarList = document.getElementById("navbar__list");
@@ -43,9 +41,9 @@ const navbarList = document.getElementById("navbar__list");
 // get header tag
 const headerTag = document.querySelector("header");
 
-// get .navbar__link
-const navbarLinksList = document.getElementsByClassName("navbar__link");
-//const navbarLinksList = document.querySelectorAll(".navbar__link"); //this won't work because https://stackoverflow.com/questions/18735188/queryselectorall-not-working
+// // get .navbar__link
+// const navbarLinksList = document.getElementsByClassName("navbar__link");
+// //const navbarLinksList = document.querySelectorAll(".navbar__link"); //this won't work because https://stackoverflow.com/questions/18735188/queryselectorall-not-working
 
 
 
@@ -88,7 +86,7 @@ function createHeaderList(){
 
 
 
-// Add class 'active' to section when near top of viewport
+// Add class 'active' to the section that is cloest to the top of viewport
 
 function addActiveClass() {
     //for each section, what's the absolute distance between the section to the top?
@@ -97,6 +95,7 @@ function addActiveClass() {
         const distanceToTop = section.getBoundingClientRect().top;
         distanceToTopArray.push(Math.abs(distanceToTop));
     });
+    
     // get the smallest distance
     const closest = Math.min(...distanceToTopArray);
 
@@ -122,14 +121,17 @@ function addActiveClass() {
 
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(element){
+
+    //prevent default jumping
     element.preventDefault();
+
     //get the target element's destination href
     const destinationHref = element.target.href;
     // parse destinationHref to get the section id
     if(destinationHref !== undefined){
         const secetionIDsNew = destinationHref.split("/").slice(-1);
-        console.log(secetionIDsNew);
-        console.log((secetionIDsNew[0] === "#"));
+        // console.log(secetionIDsNew);
+        // console.log((secetionIDsNew[0] === "#"));
         //get the destination element's offsetTop
         if(secetionIDsNew[0] === "#") {
             var destinationElementOffsetTop = 0;
@@ -137,14 +139,15 @@ function scrollToSection(element){
             var destinationElementOffsetTop = document.querySelector(secetionIDsNew).offsetTop;
         }   
     }
-    
+
     // define scrollOptions
     const scrollOptions = {
         left: 0,
         top: destinationElementOffsetTop,
         behavior: 'smooth'
     }
-    console.log(scrollOptions);
+
+    // scroll to that point
     window.scrollTo(scrollOptions);
     
 }
