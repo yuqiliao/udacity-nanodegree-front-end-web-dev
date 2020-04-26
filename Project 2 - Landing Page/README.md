@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Instructions](#Instructions)
-* [ProjectRubric](#Project%20Rubric)
+* [Project Rubric](#Project%20Rubric)
 
 ## Instructions
 
