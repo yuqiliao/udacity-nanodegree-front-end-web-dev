@@ -161,10 +161,12 @@ function scrollToSection(element){
 // Build menu 
 createHeaderList();
 
-// Set sections as active
-document.addEventListener('scroll', addActiveClass);
-
-// Scroll to section on link click
-navbarList.addEventListener('click', scrollToSection);
-
+// When the event DOMContentLoaded occurs, it is safe to access the DOM
+document.addEventListener('DOMContentLoaded', function() {
+    //console.log("it's ready!");  
+    // Set sections as active
+    document.addEventListener('scroll', addActiveClass);
+    // When the event DOMContentLoaded occurs, it is safe to access the DOM
+    navbarList.addEventListener('click', scrollToSection);
+});
 
