@@ -2,8 +2,8 @@
 
 ## Table of Contents
 
-* [Instructions](#Instructions)
-* [Project Rubric](#Project%20Rubric)
+* [Instructions](##Instructions)
+* [Project%20Rubric](##Project%20Rubric)
 
 ## Instructions
 
@@ -12,7 +12,7 @@ This project requires me to build a multi-section landing page, with a dynamical
 I build it based on the starter project provided by Udacity, which has some HTML and CSS styling to display a static version of the Landing Page project. I convert the starter project from a static project to an interactive one. This requires modifying the HTML and CSS files, but primarily the JavaScript file.
 
 
-## Project Rubric
+## Project%20Rubric
 Some key rubrics include
 - All files shown must be present and the app must successfully render a home page with clear design and functionality added when index.html is loaded in the browser. No errors should display in console.
 - All features are usable across modern desktop, tablet, and phone browsers.
