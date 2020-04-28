@@ -4,6 +4,7 @@ This repository contains the projects in completing the nanodegree from Udacity 
 
 # Project Links
 - [ ] Project 1 - Personal Blog Website
+- [ ] Project 2 - Landing Page
 
 
 
