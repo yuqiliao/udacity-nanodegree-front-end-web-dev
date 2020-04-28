@@ -23,7 +23,7 @@ const sections= document.querySelectorAll("section");
 
 let sectionIDs = []
 let sectionDataNavs = [];
-for (section of sections){
+for (const section of sections){
     const sectionID = section.getAttribute("id")
     const sectionDataNav = section.getAttribute("data-nav");
     
@@ -125,18 +125,15 @@ function scrollToSection(element){
     //prevent default jumping
     element.preventDefault();
 
-    //get the target element's destination href
-    const destinationHref = element.target.href;
-    // parse destinationHref to get the section id
-    if(destinationHref !== undefined){
-        const secetionIDsNew = destinationHref.split("/").slice(-1);
-        // console.log(secetionIDsNew);
-        // console.log((secetionIDsNew[0] === "#"));
-        //get the destination element's offsetTop
-        if(secetionIDsNew[0] === "#") {
+    //get the target element's destination hash
+    const destinationHash = element.target.hash;
+    // console.log(destinationHash)
+    // parse destinationHash to get destinationElementOffsetTop
+    if(destinationHash !== undefined){
+        if(destinationHash === "") {
             var destinationElementOffsetTop = 0;
         } else {
-            var destinationElementOffsetTop = document.querySelector(secetionIDsNew[0]).offsetTop;
+            var destinationElementOffsetTop = document.querySelector(destinationHash).offsetTop;
         }   
     }
 
