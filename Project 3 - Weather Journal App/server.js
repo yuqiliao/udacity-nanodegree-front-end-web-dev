@@ -45,10 +45,7 @@ app.post("/addData", function(req, res){
 
     res.send(projectData);
 
-    //res.send("POST received");
     console.log(projectData);
-    // data.push(req.body);
-    // console.log(data);
 });
 
 

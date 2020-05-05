@@ -1,6 +1,6 @@
 /* Global Variables */
-let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-let apiKey = '1802912abfaa1ea29ddcf5d66c39e5e0';
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+const apiKey = '1802912abfaa1ea29ddcf5d66c39e5e0';
 //api documentation: https://openweathermap.org/current
 
 // Create a new date instance dynamically with JS
@@ -13,11 +13,9 @@ let newDate = d.getMonth() + 1 +'/'+ d.getDate()+'/'+ d.getFullYear();
 /* Function to GET data from OpenWeather API */
 const getWeatherData = async (baseURL, zipCode, apiKey) => {
     const res = await fetch(baseURL+zipCode+",us&units=imperial"+"&appid="+apiKey);
-    // console.log(baseURL+zipCode+",us"+"&appid="+apiKey);
-    // console.log(res);
     try {
         const data = await res.json();
-        //console.log(data);
+        console.log(data);
         return data.main.temp;
     } catch (error) {
         console.log("error:", error);
@@ -76,15 +74,27 @@ function getResults(event) {
 
     //event.preventDefault();
 
-    // get user input
+    // get user input of zipcode
     const userZipCode = document.querySelector('#zip').value;
-    const userFeeling = document.querySelector('#feelings').value;
+
+    // get user input of feeling. if userFeeling is empty, get a reminder instead
+    const userFeeling = (document.querySelector('#feelings').value === "") ? "Don't forget to fill in your feeling today!" : document.querySelector('#feelings').value;
+    console.log(userFeeling);
 
     //get weather data
     getWeatherData(baseURL, userZipCode, apiKey)
         //combine weather data & other data; post to server
         .then(function(data) {
-            postData("/addData", {temperature: data, date: newDate, userFeeling: userFeeling});
+            // console.log(data);
+    
+            //if data is NA, meaning either users didn't input a zipcode, or the zipcode is wrong, either way, it resulted to the fact that data returned by `getWeatherData` is NA.
+            if (isNaN(data)) {
+                postData("/addData", {temperature: "Please enter a correct US zipcode to get weather data.", date: newDate, userFeeling: userFeeling});
+            } else {
+                postData("/addData", {temperature: data, date: newDate, userFeeling: userFeeling});
+            }
+            
+            
         })
         //get data from server & update dom 
         .then(updateDOM);
