@@ -1,7 +1,12 @@
 import { checkForName } from './js/nameChecker'
+import { getSentiment } from './js/getSentiment'
 import { handleSubmit } from './js/formHandler'
 
-console.log(checkForName);
+// get user input
 
-alert("I EXIST")
-console.log("CHANGE!!");
+
+export {
+    checkForName,
+    getSentiment,
+    handleSubmit
+}
