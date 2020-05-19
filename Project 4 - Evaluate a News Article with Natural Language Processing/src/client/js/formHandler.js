@@ -23,16 +23,40 @@ const postData = async ( url = '', data = {})=>{
 
 function storeResultHTML(d){
 const resultHTML = 
-`<div class="card">
-    <p class= "resultTitle">Result Snapshot</p>
-    <ul>
-        <li><span class="bold">Polarity</span>: ${d.polarity}</li>
-        <li><span class="bold">Polarity Confidence</span>: ${(d.polarity_confidence).toFixed(3)}</li>
-        <li><span class="bold">Subjectivity</span>: ${d.subjectivity}</li>
-        <li><span class="bold">Subjectivity Confidence;</span>: ${(d.subjectivity_confidence).toFixed(3)}</li>
-    </ul>
-    <p class = "resultTitle">Text Analysed</p>
-    <p>${d.text}</p>
+`<div class="resultTable">
+
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="tablerow" colspan="2"><span >Result Snapshot</span></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td class="stub">Polarity</td>
+                <td class="result">${d.polarity}</td>
+            </tr>
+            <tr>
+                <td class="stub">Polarity Confidence</td>
+                <td class="result">${(d.polarity_confidence).toFixed(3)}</td>
+            </tr>
+            <tr>
+                <td class="stub">Subjectivity</td>
+                <td class="result">${d.subjectivity}</td>
+            </tr>
+            <tr>
+                <td class="stub">Subjectivity Confidence</td>
+                <td class="result">${(d.subjectivity_confidence).toFixed(3)}</td>
+            </tr>
+            <tr>
+                <td class="tablerow" colspan="2"><span>Text Analysed</span></td>
+            </tr>
+            <tr>
+                <td class="result" colspan="2">${d.text}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>`;
 return resultHTML;
 }

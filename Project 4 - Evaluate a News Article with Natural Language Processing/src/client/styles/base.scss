@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #B5966D;
+    color: #edcb64;
+}
+
+main {
+    flex: 2;
+}
+
+section {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+p {
+    font-family: futura;
+}
+
+//https://www.tablesgenerator.com/
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:#edcb64;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:#edcb64;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+
+h1,.stub{
+    color: #B62A3D;
+    font-weight: bold;
+}
+
+.result{
+    text-align:left;
+}
+
+th.tablerow{
+    text-align:center;
+    color: #B62A3D;
+}
+
+td.tablerow{
+    text-align:center;
+    color: #B62A3D;
+}
+
