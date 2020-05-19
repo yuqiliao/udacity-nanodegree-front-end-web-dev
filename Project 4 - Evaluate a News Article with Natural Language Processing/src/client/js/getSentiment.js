@@ -21,9 +21,9 @@ const postData = async ( url = '', data = {})=>{
   }
 
 
-function getSentiment(textInput) {
-    console.log(textInput);
-    postData('/addData', {url: textInput})
+function getSentiment(formInput) {
+    console.log(formInput);
+    postData('/addData', {url: formInput})
     
 }
 

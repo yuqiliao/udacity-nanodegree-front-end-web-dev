@@ -1,12 +1,12 @@
-import { checkForName } from './js/nameChecker'
 import { getSentiment } from './js/getSentiment'
+import { checkUserInput } from './js/checkUserInput'
 import { handleSubmit } from './js/formHandler'
 
 // get user input
 
 
 export {
-    checkForName,
     getSentiment,
+    checkUserInput,
     handleSubmit
 }

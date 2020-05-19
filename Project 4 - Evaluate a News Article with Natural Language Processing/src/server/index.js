@@ -39,25 +39,25 @@ app.use(cors());
 app.use(express.static('dist'));
 
 // Setup Server
-const port = 8080;
+const port = 3000;
 app.listen(port, function () {
     console.log(`Example app listening on port ${port}!`);
     console.log(`Your API key is ${process.env.API_KEY}`);
 })
 
 
-// console.log(__dirname)
+console.log(__dirname) //ask why this is not printed in the server console?
 
 
 // GET method route
 var path = require('path')
 
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
+    res.sendFile('dist/index.html')
     //res.send("hello wol")
-    console.log(path)
-    console.log(path.resolve('src/client/views/index.html'))
-    res.sendFile(path.resolve('src/client/views/index.html'))
+    // console.log(path)
+    // console.log(path.resolve('src/client/views/index.html'))
+    // res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
 
@@ -72,21 +72,22 @@ app.get('/test', function (req, res) {
 app.post("/addData", function(req, res){
     // console.log(projectData)
     // console.log(req.body.url)
-    projectData['url'] = req.body.url
-    console.log(projectData.url)
-
-
+    //projectData['url'] = req.body
+    // console.log(req.body)
+    // console.log(Object.values(req.body))
+    const userURL = Object.values(req.body)
     // feed url to aylien api
 
     textapi.sentiment({
-        url: projectData.url,
+        url: userURL,
         mode: 'document'
         }, function(error, response) {
         if (error === null) {
-            console.log(response);
+            //console.log(response);
             res.send(response)
         } else {
-            console.log(error)
+            //console.log(error);
+            res.send({error: "#_# Something is wrong, please try a different URL"})
         }
     });
 

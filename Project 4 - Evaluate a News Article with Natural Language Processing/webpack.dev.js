@@ -10,6 +10,11 @@ module.exports = {
         library: 'Client'
     },
     mode: 'development',
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'public'),
+    //     port: 3000,
+    //     host: `localhost`,
+    // },
     devtool: 'source-map',
     stats: 'verbose',
     module: {
