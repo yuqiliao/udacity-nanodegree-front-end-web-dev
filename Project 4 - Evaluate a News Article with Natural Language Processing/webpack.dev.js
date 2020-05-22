@@ -7,7 +7,7 @@ module.exports = {
     entry: './src/client/index.js',
     output: {
         libraryTarget: 'var',
-        library: 'Client',
+        library: 'Client'
     },
     mode: 'development',
     // devServer: {
@@ -15,6 +15,15 @@ module.exports = {
     //     port: 3000,
     //     host: `localhost`,
     // },
+    // devServer: {
+    //     contentBase: path.join(__dirname, 'public'),
+    //     compress: true,
+    //     port: 3000,
+    //     hotOnly: true,
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //     },
+    //   },
     devtool: 'source-map',
     stats: 'verbose',
     module: {
