@@ -10,11 +10,11 @@ module.exports = {
         library: 'Client'
     },
     mode: 'development',
-    // devServer: {
-    //     contentBase: path.join(__dirname, 'public'),
-    //     port: 3000,
-    //     host: `localhost`,
-    // },
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        port: 3000,
+        host: `localhost`,
+    },
     // devServer: {
     //     contentBase: path.join(__dirname, 'public'),
     //     compress: true,
