@@ -43,10 +43,11 @@ const port = 3000;
 app.listen(port, function () {
     console.log(`Example app listening on port ${port}!`);
     console.log(`Your API key is ${process.env.API_KEY}`);
+    console.log(__dirname) //ask why this is not printed in the server console if put outside of the app.listen()?
 })
 
 
-console.log(__dirname) //ask why this is not printed in the server console?
+
 
 
 // GET method route
@@ -65,6 +66,7 @@ const mockAPIResponse = require('./mockAPI.js')
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
+    console.log("/test route works")
 })
 
 
@@ -73,8 +75,8 @@ app.post("/addData", function(req, res){
     // console.log(projectData)
     // console.log(req.body.url)
     //projectData['url'] = req.body
-    // console.log(req.body)
-    // console.log(Object.values(req.body))
+    console.log(req.body)
+    //console.log(Object.values(req.body))
     const userURL = Object.values(req.body)
     // feed url to aylien api
 

@@ -6,6 +6,7 @@ const postData = async ( url = '', data = {})=>{
       credentials: 'same-origin', // include, *same-origin, omit
       headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify(data), // body data type must match "Content-Type" header        
     });
@@ -81,7 +82,7 @@ function handleSubmit(event) {
         //otherwise, proceed
         // Send the object to aylien API
         console.log("::: Form Submitted :::")
-        postData('/addData', data)
+        postData('http://localhost:3000/addData', data)
             .then(function(res) {
                 console.log(res)
 
