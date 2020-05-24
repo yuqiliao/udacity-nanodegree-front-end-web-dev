@@ -67,8 +67,6 @@ const updateDOM = async () => {
     }
 };
 
-// Add event listener
-document.querySelector("#generate").addEventListener('click', getResults);
 
 function getResults(event) {
 

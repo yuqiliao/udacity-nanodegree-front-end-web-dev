@@ -1,4 +1,4 @@
-# Weather-Journal App Project
+# Capstone - Travel App
 
 ## Overview
 This project requires me to create an asynchronous web app that uses Web API and user data to dynamically update the UI. It's my first dive into [node.js](https://nodejs.org/en/).
