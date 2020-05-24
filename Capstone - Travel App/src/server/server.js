@@ -1,3 +1,11 @@
+/*set up dotenv*/
+//https://www.npmjs.com/package/dotenv
+const dotenv = require('dotenv')
+dotenv.config()
+
+const openWeatherMapApiKey = process.env.OpenWeatherMap_API_KEY;
+
+
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
 
@@ -49,6 +57,34 @@ app.post("/addData", function(req, res){
 });
 
 
+////Get weather data - using OpenWeatherMap API (api documentation: https://openweathermap.org/current)
+const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+
+//Define getWeatherData function to GET data from OpenWeather API
+const fetch = require("node-fetch");
+const getWeatherData = async (baseURL, zipCode, apiKey) => {
+    const res = await fetch(baseURL+zipCode+",us&units=imperial"+"&appid="+apiKey);
+    try {
+        const data = await res.json();
+        console.log("this is a test printout from getWeatherData"+data.main.temp);
+        return data.main.temp;
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+
+app.post("/userZipCode", function(req, res){
+
+    // get user input of zipcode sent from client side
+    const zipCode = req.body.zipCode
+    
+    // call weather API to get weather data
+    getWeatherData(baseURL, zipCode, openWeatherMapApiKey)
+        .then(function(data){
+            console.log({temperature: data})
+            res.send({temperature: data});
+        })
+});
 
 
 
