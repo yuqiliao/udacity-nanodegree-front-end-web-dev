@@ -97,3 +97,5 @@ function getResults(event) {
         //get data from server & update dom 
         .then(updateDOM);
 }
+
+export{ getResults }
