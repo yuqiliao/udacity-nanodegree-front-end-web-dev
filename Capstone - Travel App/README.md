@@ -1,40 +1,14 @@
-# Capstone - Travel App
+# Weather-Journal App Project
 
 ## Overview
 This project requires me to create an asynchronous web app that uses Web API and user data to dynamically update the UI. It's my first dive into [node.js](https://nodejs.org/en/).
 
-This project requires me to build a web tool that allows users to run Natural Language Processing (NLP) on articles or blogs found on other websites. Using an exciting new api called [Aylien](https://aylien.com/), I build a simple web interface to interact with their NLP system. Users could input the URL of a website, after which this tool will provide pertinent information about the text in the URL, like whether the content is subjective (opinion) or objective (fact-based) and whether it is positive, neutral, or negative in tone.
+## Project Rubric
+Some key rubrics include
+- Create API credentials on OpenWeatherMap.com.
+- There should be a GET route setup on the server side with the first argument as a string naming the route, and the second argument a callback function to return the JS object created at the top of server code.
+- There should be an asynchronous function to fetch the data from the app endpoint
+- You should be able to add an entry to the project endpoint using a POST route setup on the server side and executed on the client side as an asynchronous function. The client side function should take two arguments, the URL to make a POST to, and an object holding the data to POST.The server side function should create a new entry in the apps endpoint (the named JS object) consisting of the data received from the client side POST.
+- Adds an event listener to an existing HTML button from DOM using Vanilla JS. In the file `app.js`, the element with the id of generate should have an `addEventListener()` method called on it, with `click` as the first parameter, and a named callback function as the second parameter.
+- Sets the properties of existing HTML elements from the DOM using Vanilla JavaScript. Included in the async function to retrieve that app’s data on the client side, existing DOM elements should have their `innerHTML` properties dynamically set according to data returned by the app route.
 
-[Node](https://nodejs.org/en/) and [express](https://expressjs.com/) are used as the webserver and routing, and [webpack](https://webpack.js.org/) is used as the build tool, using which I set up the app to have dev and prod environments, each with their own set of tools and commands. I also used [Jest](https://jestjs.io/) to handle testing, and set up [service workers](https://codelabs.developers.google.com/codelabs/workbox-lab/#5) for offline support.
-
-The goal of this project is for me to practice with:
-- Setting up Webpack
-- Sass styles
-- Webpack Loaders and Plugins
-- Creating layouts and page design
-- Service workers
-- Using APIs and creating requests to external urls
-
-## Getting started
-1. Install the required packages: 
-    ```
-    $ npm install
-    ```
-2. Create your credentials for Aylien on https://developer.aylien.com/signup 
-3. Create a .env file on the root of the project and enter your ID and key :
-    ```
-    API_ID=**************************
-    API_KEY=**************************
-    ```
-4. Run the build : 
-    ```
-    $ npm run build-prod
-    ```
-5. Run the server:
-    ```
-    $ npm start
-    ```
-6. Run the tests: 
-    ```
-    $ npm run test
-    ```
