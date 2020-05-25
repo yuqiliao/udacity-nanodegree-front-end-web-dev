@@ -1,4 +1,3 @@
-import { getResults } from './js/app'
 import { getData } from './js/app'
 
 import './styles/style.scss'

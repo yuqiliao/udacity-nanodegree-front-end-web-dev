@@ -6,9 +6,6 @@ dotenv.config()
 const openWeatherMapApiKey = process.env.OpenWeatherMap_API_KEY;
 
 
-// Setup empty JS object to act as endpoint for all routes
-projectData = {};
-
 // Require Express to run server and routes
 const express = require("express");
 
@@ -37,24 +34,24 @@ const server = app.listen(port, () => {
     console.log(`this is working! the server is running on localhost: ${port}`)
 });
 
-// GET method route
-app.get("/database", function(req, res){
-    // console.log(req);
-    res.send(projectData);
-});
+// // GET method route
+// app.get("/database", function(req, res){
+//     // console.log(req);
+//     res.send(projectData);
+// });
 
-// POST method route
+// // POST method route
 
-app.post("/addData", function(req, res){
+// app.post("/addData", function(req, res){
 
-    projectData['temperature'] = req.body.temperature;
-    projectData['date'] = req.body.date;
-    projectData['userFeeling'] = req.body.userFeeling;
+//     projectData['temperature'] = req.body.temperature;
+//     projectData['date'] = req.body.date;
+//     projectData['userFeeling'] = req.body.userFeeling;
 
-    res.send(projectData);
+//     res.send(projectData);
 
-    console.log(projectData);
-});
+//     console.log(projectData);
+// });
 
 
 ////Get weather data - using OpenWeatherMap API (api documentation: https://openweathermap.org/current)
