@@ -1,11 +1,13 @@
-import { getData } from './js/app'
+import { doSomething } from './js/app'
+// import { doSomething } from './js/app'
+
 
 import './styles/style.scss'
 
 export {
-    getData
+    doSomething,
 }
 
 
 // Add event listener
-document.querySelector("#generate").addEventListener('click', getData);
+document.querySelector("#generate").addEventListener('click', doSomething);

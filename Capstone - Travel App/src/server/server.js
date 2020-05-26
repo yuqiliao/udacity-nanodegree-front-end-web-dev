@@ -4,7 +4,11 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const openWeatherMapApiKey = process.env.OpenWeatherMap_API_KEY;
+const geoNamesApiID = process.env.geoNamesAPI_ID;
+const weatherbitApikey = process.env.weatherbitAPI_KEY;
 
+/*set up fetch to be used in API calls*/
+const fetch = require("node-fetch");
 
 // Require Express to run server and routes
 const express = require("express");
@@ -54,34 +58,110 @@ const server = app.listen(port, () => {
 // });
 
 
-////Get weather data - using OpenWeatherMap API (api documentation: https://openweathermap.org/current)
-const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+// ////Get weather data - using OpenWeatherMap API (api documentation: https://openweathermap.org/current)
+// const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
+// //Define getWeatherData function to GET data from OpenWeather API
 
-//Define getWeatherData function to GET data from OpenWeather API
-const fetch = require("node-fetch");
-const getWeatherData = async (baseURL, zipCode, apiKey) => {
-    const res = await fetch(baseURL+zipCode+",us&units=imperial"+"&appid="+apiKey);
+// const getWeatherData = async (baseURL, zipCode, apiKey) => {
+//     const res = await fetch(baseURL+zipCode+",us&units=imperial"+"&appid="+apiKey);
+//     try {
+//         const data = await res.json();
+//         console.log("this is a test printout from getWeatherData"+data.main.temp);
+//         return data.main.temp;
+//     } catch (error) {
+//         console.log("error:", error);
+//     }
+// }
+
+
+////Get geo data - using geonames API (api documentation: http://www.geonames.org/export/geonames-search.html)
+const geoNamesbaseURL = 'http://api.geonames.org/searchJSON?q={'
+
+//Define getGeoData function to GET data from geoname API
+const getGeoData = async (baseURL, cityName, apiID) => {
+    const res = await fetch(baseURL+cityName+"}&maxRows=1&username="+apiID);
     try {
         const data = await res.json();
-        console.log("this is a test printout from getWeatherData"+data.main.temp);
-        return data.main.temp;
+        //console.log(data)
+        //console.log(data.geonames[0]);
+        return data.geonames[0];
     } catch (error) {
         console.log("error:", error);
     }
 }
 
-app.post("/userZipCode", function(req, res){
-
+app.post("/GeoNames", function(req, res){
     // get user input of zipcode sent from client side
-    const zipCode = req.body.zipCode
-    
+    const cityName = req.body.cityName
+    console.log(cityName)
     // call weather API to get weather data
-    getWeatherData(baseURL, zipCode, openWeatherMapApiKey)
+    getGeoData(geoNamesbaseURL, cityName, geoNamesApiID)
         .then(function(data){
-            console.log({temperature: data})
-            res.send({temperature: data});
+            console.log(data)
+            res.send(data);
         })
 });
 
 
 
+
+////Get weather data - using weatherbit API (api documentation: https://www.weatherbit.io/api/weather-current)
+const weatherbitCurrentBaseURL = 'https://api.weatherbit.io/v2.0/current?'
+
+//Define getCurrentWeatherData function to GET data from geoname API
+const getCurrentWeatherData = async (baseURL, lat, lon, apiKey) => {
+    const res = await fetch(baseURL+"lat="+lat+"&lon="+lon+"&key="+apiKey);
+    try {
+        const data = await res.json();
+        console.log(data.data[0])
+        return data.data[0];
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+
+app.post("/WeatherbitCurrent", function(req, res){
+    // get user input of zipcode sent from client side
+    
+    const lat = req.body.lat
+    const lon = req.body.lng
+    console.log(lat,lon)
+    // call weather API to get weather data
+    getCurrentWeatherData(weatherbitCurrentBaseURL, lat, lon, weatherbitApikey)
+        .then(function(data){
+            res.send(data);
+        })
+});
+
+
+////Get weather data - using weatherbit API (api documentation: https://www.weatherbit.io/api/climate-normals)
+const weatherbitNormalBaseURL = 'https://api.weatherbit.io/v2.0/normals?'
+
+//Define getCurrentWeatherData function to GET data from geoname API
+const getNormalWeatherData = async (baseURL, lat, lon, startDay, endDay, apiKey) => {
+    const res = await fetch(baseURL+"lat="+lat+"&lon="+lon+"&start_day="+startDay+"&end_day="+endDay+"&tp=daily&key="+apiKey);
+    try {
+        const data = await res.json();
+        console.log(data.data[0])
+        return data.data[0];
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+
+app.post("/WeatherbitNormal", function(req, res){
+    // get user input of zipcode sent from client side
+    
+    const lat = req.body.lat
+    const lon = req.body.lng
+    const userDate = req.body.userDate
+
+    //userDay is a date in YYYY-MM-DD format entered by user. I need to add and substract 7 days to create startDay & endDay. Later I can use API to calculate aggregated stats historically in this day range.
+    console.log(lat,lon, userDate)
+
+    // call weather API to get weather data
+    getNormalWeatherData(weatherbitNormalBaseURL, lat, lon, userDate, userDate, weatherbitApikey)
+        .then(function(data){
+            res.send(data);
+        })
+});
