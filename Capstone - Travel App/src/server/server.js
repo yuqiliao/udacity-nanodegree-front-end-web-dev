@@ -110,12 +110,12 @@ app.post("/GeoNames", function(req, res){
 const weatherbitCurrentBaseURL = 'https://api.weatherbit.io/v2.0/current?'
 
 //Define getCurrentWeatherData function to GET data from geoname API
-const getCurrentWeatherData = async (baseURL, lat, lon, apiKey) => {
+const getCurrentWeatherData = async (baseURL, lat, lon, apiKey, des) => {
     const res = await fetch(baseURL+"lat="+lat+"&lon="+lon+"&key="+apiKey);
     try {
         const data = await res.json();
-        console.log(data.data[0])
-        return data.data[0];
+        //console.log(data.data[0])
+        return {data: data.data[0], des: des};
     } catch (error) {
         console.log("error:", error);
     }
@@ -126,9 +126,10 @@ app.post("/WeatherbitCurrent", function(req, res){
     
     const lat = req.body.lat
     const lon = req.body.lng
-    console.log(lat,lon)
+    const des = req.body.des
+    console.log(lat,lon, des.cityName, des.countryName)
     // call weather API to get weather data
-    getCurrentWeatherData(weatherbitCurrentBaseURL, lat, lon, weatherbitApikey)
+    getCurrentWeatherData(weatherbitCurrentBaseURL, lat, lon, weatherbitApikey, des)
         .then(function(data){
             res.send(data);
         })
@@ -139,12 +140,12 @@ app.post("/WeatherbitCurrent", function(req, res){
 const weatherbitNormalBaseURL = 'https://api.weatherbit.io/v2.0/normals?'
 
 //Define getCurrentWeatherData function to GET data from geoname API
-const getNormalWeatherData = async (baseURL, lat, lon, startDay, endDay, apiKey) => {
+const getNormalWeatherData = async (baseURL, lat, lon, startDay, endDay, apiKey, des) => {
     const res = await fetch(baseURL+"lat="+lat+"&lon="+lon+"&start_day="+startDay+"&end_day="+endDay+"&tp=daily&key="+apiKey);
     try {
         const data = await res.json();
-        console.log(data.data[0])
-        return data.data[0];
+        //console.log(data)
+        return {data: data.data[0], des: des};
     } catch (error) {
         console.log("error:", error);
     }
@@ -156,12 +157,13 @@ app.post("/WeatherbitNormal", function(req, res){
     const lat = req.body.lat
     const lon = req.body.lng
     const userDate = req.body.userDate
+    const des = req.body.des
 
     //userDay is a date in YYYY-MM-DD format entered by user. I need to add and substract 7 days to create startDay & endDay. Later I can use API to calculate aggregated stats historically in this day range.
-    console.log(lat,lon, userDate)
+    console.log(lat,lon, userDate, des.cityName, des.countryName)
 
     // call weather API to get weather data
-    getNormalWeatherData(weatherbitNormalBaseURL, lat, lon, userDate, userDate, weatherbitApikey)
+    getNormalWeatherData(weatherbitNormalBaseURL, lat, lon, userDate, userDate, weatherbitApikey, des)
         .then(function(data){
             res.send(data);
         })

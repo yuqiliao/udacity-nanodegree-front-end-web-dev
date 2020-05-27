@@ -1,10 +1,3 @@
-// Create a new date instance dynamically with JS
-
-// console.log(d);
-// console.log(newDate);
-
-
-
 //// process date input
 let today = new Date();
 
@@ -43,6 +36,25 @@ const postData = async ( url = '', data = {})=>{
       }
   }
 
+function displayResult(data){
+  console.log("here's results!")
+  console.log(data)
+
+  const resultHTML =
+  `<div id = "countdown"><span id = "city">${data.des.cityName}, ${data.des.countryName}</span> is <span id = "daysAway"></span> away!</div> 
+  <div id = "temperature">
+    Typical weather for then is: 
+    <br>
+    <span id = "tempHigh">High: ${data.data.max_temp} °C</span>, <span id = "tempLow">Low: ${data.data.min_temp} °C</span>, <span id = "temAvg">Average: ${data.data.temp}°C</span>
+  </div>`
+  document.getElementById('results').innerHTML = resultHTML 
+
+}
+  
+
+
+
+
 function doSomething() {
     // get user input of cityName
     const userCityName = document.querySelector('#city').value;
@@ -55,9 +67,9 @@ function doSomething() {
         //GeoNames stats returned
         .then(function(res){
             console.log(res)
-            console.log({lng: res.lng, lat: res.lat})
+            //console.log({lng: res.lng, lat: res.lat})
             
-            
+          
             //get user inputed date (after the button click event)
             let userDate = document.getElementById('departureDate').value;
             
@@ -74,24 +86,31 @@ function doSomething() {
             //if the departure date is less than 7 days away
             if(diffDays <= 7){
               //send it to weatherbitAPI to get CURRENT weather data
-              postData("http://localhost:3000/WeatherbitCurrent", {lng: res.lng, lat: res.lat})
+              return postData("http://localhost:3000/WeatherbitCurrent", {lng: res.lng, lat: res.lat, des: {cityName: res.name, countryName: res.countryName}})
               //weather data returned
-              .then(function(res){
-                console.log(res);
-              })
+              // .then(function(res){
+              //   console.log(res);
+
+              //   //display results
+              //   displayResults(res)
+                
+              // })
               
 
             } else {//if the departure date more than 7 days in the future
               //send it to weatherbitAPI to get FUTURE weather data
-              postData("http://localhost:3000/WeatherbitNormal", {lng: res.lng, lat: res.lat, userDate: userDateMMDD})
+              return postData("http://localhost:3000/WeatherbitNormal", {lng: res.lng, lat: res.lat, userDate: userDateMMDD, des: {cityName: res.name, countryName: res.countryName}})
               //weather data returned
-              .then(function(res){
-                console.log(res);
-              })
+              // .then(function(res){
+              //   console.log(res);
+
+              //   //display results
+              //   displayResults(res)
+              // })
             }
 
 
-            
+           
 
 
         //update values with new entry
@@ -99,6 +118,9 @@ function doSomething() {
         // document.querySelector('#userTemp').innerHTML = res.temperature;
         // document.querySelector('#userFeeling').innerHTML = userFeeling;
         })
+        ///
+        .then(displayResult)
+        
 }
 
 export{ doSomething }
