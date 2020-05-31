@@ -36,93 +36,113 @@ const postData = async ( url = '', data = {})=>{
       }
   }
 
+
+
+
+function getCityPicture(){
+  // get user input of cityName
+  const userCityName = document.querySelector('#city').value;
+  //console.log("hi"+userCityName)
+  //send userCityName to pixabay API to get a profile pic of the city (process in the server)
+  return postData("http://localhost:3000/pixabay", {cityName: userCityName})
+}
+
+function getGeoInfo(data){
+  console.log(data)
+  //send city name to geoNames API to get lat/lon info (process in the server)
+  return postData("http://localhost:3000/GeoNames", {cityName: data.cityName, picURL: data.picURL})
+
+}
+
+function getWeather(res){
+  console.log(res)
+
+  //get user inputed date (after the button click event)
+  let userDate = document.getElementById('departureDate').value;
+  
+  //compare user inputed date and today
+  let diffTime = Math.abs(new Date(userDate) - new Date(today));
+  let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+  console.log("difference in userDate and today: " + diffDays + " days")
+
+  //get user inputed date in the MM-DD format (for weatherbit API use)
+  let userDateMMDD = userDate.slice(userDate.length - 5)
+
+  //if the departure date is less than 7 days away
+  if(diffDays <= 7){
+    //send it to weatherbitAPI to get CURRENT weather data
+    return postData("http://localhost:3000/WeatherbitCurrent", {lng: res.data.lng, lat: res.data.lat, des: {cityName: res.data.name, countryName: res.data.countryName, daysAway: diffDays, cityURL: res.cityURL}})
+    // .then(function(res){
+    //   console.log(res)
+    // })
+  } else {//if the departure date more than 7 days in the future
+    //send it to weatherbitAPI to get FUTURE weather data
+    return postData("http://localhost:3000/WeatherbitNormal", {lng: res.data.lng, lat: res.data.lat, userDate: userDateMMDD, des: {cityName: res.data.name, countryName: res.data.countryName, daysAway: diffDays, cityURL: res.cityURL}})
+  }
+  
+}
+
 function displayResult(data){
   console.log("here's results!")
   console.log(data)
 
-  const resultHTML =
-  `<div id = "countdown"><span id = "city">${data.des.cityName}, ${data.des.countryName}</span> is <span id = "daysAway"></span> away!</div> 
-  <div id = "temperature">
-    Typical weather for then is: 
-    <br>
-    <span id = "tempHigh">High: ${data.data.max_temp} °C</span>, <span id = "tempLow">Low: ${data.data.min_temp} °C</span>, <span id = "temAvg">Average: ${data.data.temp}°C</span>
-  </div>`
+  //get today
+  let daysAwayText = ""
+  console.log(data.des.daysAway)
+  if (data.des.daysAway === 0) {
+     daysAwayText = "today"
+  } else if (data.des.daysAway === 1) {
+     daysAwayText = "tomorrow"
+  } else {
+     daysAwayText = data.des.daysAway + " days away"
+  }
+  console.log(daysAwayText)
+  
+  let countdownHTML = `<div id = "countdown"><span id = "city">${data.des.cityName}, ${data.des.countryName}</span> is <span id = "daysAway">${daysAwayText}</span>!</div>`
+
+  let weatherHTML = ""
+  if (data.des.daysAway <= 7){
+    weatherHTML = 
+    `<div id = "temperature">
+      Current weather at the destination is: 
+      <br>
+      <span id = "temp">Temperature: ${data.data.temp} °C</span>, <span id = "tempFeel">Feels like: ${data.data.app_temp} °C</span>
+      <br>
+      <img id = "tempIcon", src = "src/client/media/weatherIcons/${data.data.weather.icon}.png"> <span id = "tempDes">${data.data.weather.description}</span>
+    </div>`
+
+  } else {
+    weatherHTML = 
+    `<div id = "temperature">
+      Typical weather for then is: 
+      <br>
+      <span id = "tempHigh">High: ${data.data.max_temp} °C</span>, <span id = "tempLow">Low: ${data.data.min_temp} °C</span>
+      <br>
+      <span id = "temAvg">Average: ${data.data.temp}°C</span>
+    </div>`
+  }
+  console.log(weatherHTML)
+  const resultHTML = countdownHTML + weatherHTML;
+  console.log(resultHTML)
+
   document.getElementById('results').innerHTML = resultHTML 
 
-}
-  
 
 
+  let pictureHTML = `<img src= ${data.des.cityURL} alt = "destination city picture">`
+  //insert city pic
+  document.getElementById('cityPic').innerHTML = pictureHTML 
 
-
-function doSomething() {
-    // get user input of cityName
-    const userCityName = document.querySelector('#city').value;
-
-    // // get user input of feeling. if userFeeling is empty, get a reminder instead
-    //const userFeeling = (document.querySelector('#feelings').value === "") ? "Don't forget to fill in your feeling today!" : document.querySelector('#feelings').value;
-
-    //send userCityName to geoNames API to get lat/lon info (process in the server)
-    postData("http://localhost:3000/GeoNames", {cityName: userCityName})
-        //GeoNames stats returned
-        .then(function(res){
-            console.log(res)
-            //console.log({lng: res.lng, lat: res.lat})
-            
-          
-            //get user inputed date (after the button click event)
-            let userDate = document.getElementById('departureDate').value;
-            
-            //compare user inputed date and today
-            let diffTime = Math.abs(new Date(userDate) - new Date(today));
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            console.log("difference in userDate and today: " + diffDays + " days")
-
-            //get user inputed date in the MM-DD format (for weatherbit API use)
-            //console.log(userDate.slice(userDate.length - 5))
-            let userDateMMDD = userDate.slice(userDate.length - 5)
-            
-
-            //if the departure date is less than 7 days away
-            if(diffDays <= 7){
-              //send it to weatherbitAPI to get CURRENT weather data
-              return postData("http://localhost:3000/WeatherbitCurrent", {lng: res.lng, lat: res.lat, des: {cityName: res.name, countryName: res.countryName}})
-              //weather data returned
-              // .then(function(res){
-              //   console.log(res);
-
-              //   //display results
-              //   displayResults(res)
-                
-              // })
-              
-
-            } else {//if the departure date more than 7 days in the future
-              //send it to weatherbitAPI to get FUTURE weather data
-              return postData("http://localhost:3000/WeatherbitNormal", {lng: res.lng, lat: res.lat, userDate: userDateMMDD, des: {cityName: res.name, countryName: res.countryName}})
-              //weather data returned
-              // .then(function(res){
-              //   console.log(res);
-
-              //   //display results
-              //   displayResults(res)
-              // })
-            }
-
-
-           
-
-
-        //update values with new entry
-        // document.querySelector('#userDate').innerHTML = newDate;
-        // document.querySelector('#userTemp').innerHTML = res.temperature;
-        // document.querySelector('#userFeeling').innerHTML = userFeeling;
-        })
-        ///
-        .then(displayResult)
-        
 }
 
-export{ doSomething }
+
+function doEverything(){
+  getCityPicture()
+    .then(getGeoInfo)
+    .then(getWeather)
+    .then(displayResult)
+}
+
+export{ doEverything }
 
 

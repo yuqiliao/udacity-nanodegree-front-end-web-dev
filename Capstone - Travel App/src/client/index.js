@@ -1,13 +1,13 @@
-import { doSomething } from './js/app'
+import { doEverything } from './js/app'
 // import { doSomething } from './js/app'
 
 
 import './styles/style.scss'
 
 export {
-    doSomething,
+    doEverything,
 }
 
 
 // Add event listener
-document.querySelector("#generate").addEventListener('click', doSomething);
+document.querySelector("#generate").addEventListener('click', doEverything);

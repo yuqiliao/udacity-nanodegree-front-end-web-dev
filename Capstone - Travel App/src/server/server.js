@@ -79,13 +79,13 @@ const server = app.listen(port, () => {
 const geoNamesbaseURL = 'http://api.geonames.org/searchJSON?q={'
 
 //Define getGeoData function to GET data from geoname API
-const getGeoData = async (baseURL, cityName, apiID) => {
+const getGeoData = async (baseURL, cityName, apiID, cityURL) => {
     const res = await fetch(baseURL+cityName+"}&maxRows=1&username="+apiID);
     try {
         const data = await res.json();
         //console.log(data)
         //console.log(data.geonames[0]);
-        return data.geonames[0];
+        return {data: data.geonames[0], cityURL: cityURL};
     } catch (error) {
         console.log("error:", error);
     }
@@ -94,11 +94,12 @@ const getGeoData = async (baseURL, cityName, apiID) => {
 app.post("/GeoNames", function(req, res){
     // get user input of zipcode sent from client side
     const cityName = req.body.cityName
-    console.log(cityName)
+    const cityURL = req.body.picURL
+    console.log(cityName, cityURL)
     // call weather API to get weather data
-    getGeoData(geoNamesbaseURL, cityName, geoNamesApiID)
+    getGeoData(geoNamesbaseURL, cityName, geoNamesApiID, cityURL)
         .then(function(data){
-            console.log(data)
+            //console.log(data)
             res.send(data);
         })
 });
@@ -114,7 +115,7 @@ const getCurrentWeatherData = async (baseURL, lat, lon, apiKey, des) => {
     const res = await fetch(baseURL+"lat="+lat+"&lon="+lon+"&key="+apiKey);
     try {
         const data = await res.json();
-        //console.log(data.data[0])
+        //console.log({data: data.data[0], des: des})
         return {data: data.data[0], des: des};
     } catch (error) {
         console.log("error:", error);
@@ -123,11 +124,10 @@ const getCurrentWeatherData = async (baseURL, lat, lon, apiKey, des) => {
 
 app.post("/WeatherbitCurrent", function(req, res){
     // get user input of zipcode sent from client side
-    
     const lat = req.body.lat
     const lon = req.body.lng
     const des = req.body.des
-    console.log(lat,lon, des.cityName, des.countryName)
+    console.log(lat,lon, des.cityName, des.countryName, des.daysAway, des.cityURL)
     // call weather API to get weather data
     getCurrentWeatherData(weatherbitCurrentBaseURL, lat, lon, weatherbitApikey, des)
         .then(function(data){
@@ -164,6 +164,33 @@ app.post("/WeatherbitNormal", function(req, res){
 
     // call weather API to get weather data
     getNormalWeatherData(weatherbitNormalBaseURL, lat, lon, userDate, userDate, weatherbitApikey, des)
+        .then(function(data){
+            res.send(data);
+        })
+});
+
+
+
+////Get picture of the city - using pixabay API (api documentation: https://pixabay.com/api/docs/)
+const picBaseURL = 'https://pixabay.com/api/'
+
+//Define getCurrentWeatherData function to GET data from geoname API
+const getPicture = async (baseURL, cityName, apiKey) => {
+    const res = await fetch(baseURL+"?key="+apiKey+"&q="+encodeURIComponent(cityName)+"&image_type=photo&page=1&per_page=3&orientation=horizontal");
+    try {
+        const data = await res.json();
+        //console.log(data.hits[0].webformatURL)
+        return {picURL: data.hits[0].webformatURL, cityName: cityName};
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+
+app.post("/pixabay", function(req, res){
+    const cityName = req.body.cityName
+    //console.log(cityName)
+    // call pixabay API to get picture
+    getPicture(picBaseURL, cityName, pixabayApikey)
         .then(function(data){
             res.send(data);
         })
