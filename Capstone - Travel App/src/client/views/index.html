@@ -6,26 +6,29 @@
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
 </head>
   <body>
-    <div id = "app">
-      <div class ="holder headline">
-        Travel Planner
-      </div>
-      <div class ="holder city">
-        <label for="city">Where are you going?</label>
-        <input type="text" id="city" placeholder="Enter a city name here">
-      </div>
-      <div class ="holder departureDate">
-        <label for="departureDate">When will the trip start?</label>
-        <input type="date" id="departureDate" required>
-      </div>
-      <div class ="holder generateButton">
-        <button id="generate" type = "submit"> Save </button>
-      </div>
-      <div class ="holder entry">
-        <div class = "title">Most Recent Entry</div>
-        <div id = "results"></div>
-        <div id = "cityPic"></div>
-      </div>
+
+    <div class ="hero">
+      Travel Planner
     </div>
+
+    <div class = "main">
+      <div class ="destination">
+        <label for="city">I'm going to: </label><input type="text" id="city" placeholder="Enter a city name here">
+      </div>
+      <div class ="departureDate">
+        <label for="departureDate">Departing on: </label><input type="date" id="departureDate" required>
+      </div>
+      <div class ="buttons">
+        <button id="saveButton" type = "submit"> Save trip</button>
+        <button id="removeButton" type = "submit"> Remove trip</button>
+      </div>
+      <div id ="cityPic"><img src= "https://pixabay.com/get/55e4d6424e55ab14f6d1867dda293179113edbe3544c704c7c2f72d19f45c25f_640.jpg" alt = "destination city picture"></div>
+      <div id ="results"></div>  
+    </div>
+
+    <div class ="footer">
+      &copy; Yuqi 2020
+    </div>
+
   </body>
 </html>

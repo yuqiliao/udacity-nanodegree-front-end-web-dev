@@ -83,12 +83,11 @@ function getWeather(res){
 }
 
 function displayResult(data){
-  console.log("here's results!")
   console.log(data)
 
   //get today
   let daysAwayText = ""
-  console.log(data.des.daysAway)
+  // console.log(data.des.daysAway)
   if (data.des.daysAway === 0) {
      daysAwayText = "today"
   } else if (data.des.daysAway === 1) {
@@ -96,9 +95,9 @@ function displayResult(data){
   } else {
      daysAwayText = data.des.daysAway + " days away"
   }
-  console.log(daysAwayText)
+  // console.log(daysAwayText)
   
-  let countdownHTML = `<div id = "countdown"><span id = "city">${data.des.cityName}, ${data.des.countryName}</span> is <span id = "daysAway">${daysAwayText}</span>!</div>`
+  let countdownHTML = `<div id = "countdown"><span id = "cityName">${data.des.cityName}, ${data.des.countryName}</span> is <span id = "daysAway">${daysAwayText}</span>!</div>`
 
   let weatherHTML = ""
   if (data.des.daysAway <= 7){
@@ -121,9 +120,9 @@ function displayResult(data){
       <span id = "temAvg">Average: ${data.data.temp}°C</span>
     </div>`
   }
-  console.log(weatherHTML)
+  // console.log(weatherHTML)
   const resultHTML = countdownHTML + weatherHTML;
-  console.log(resultHTML)
+  // console.log(resultHTML)
 
   document.getElementById('results').innerHTML = resultHTML 
 

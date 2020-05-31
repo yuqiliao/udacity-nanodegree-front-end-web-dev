@@ -10,4 +10,4 @@ export {
 
 
 // Add event listener
-document.querySelector("#generate").addEventListener('click', doEverything);
+document.querySelector("#saveButton").addEventListener('click', doEverything);
