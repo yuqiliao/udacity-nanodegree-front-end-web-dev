@@ -103,21 +103,23 @@ function displayResult(data){
   if (data.des.daysAway <= 7){
     weatherHTML = 
     `<div id = "temperature">
-      Current weather at the destination is: 
-      <br>
-      <span id = "temp">Temperature: ${data.data.temp} °C</span>, <span id = "tempFeel">Feels like: ${data.data.app_temp} °C</span>
-      <br>
-      <img id = "tempIcon", src = "src/client/media/weatherIcons/${data.data.weather.icon}.png"> <span id = "tempDes">${data.data.weather.description}</span>
+      <span id = tempTitle>Current weather at the destination is: </span>
+      <ul class="list">
+        <li><span id = "temp">Temperature: ${data.data.temp} °C</span></li>
+        <li><span id = "tempFeel">Feels like: ${data.data.app_temp} °C</span></li>
+        <li><span id = "tempDes">${data.data.weather.description}<img id = "tempIcon", src = "src/client/media/weatherIcons/${data.data.weather.icon}.png"></span></li>
+      </ul>
     </div>`
 
   } else {
     weatherHTML = 
     `<div id = "temperature">
-      Typical weather for then is: 
-      <br>
-      <span id = "tempHigh">High: ${data.data.max_temp} °C</span>, <span id = "tempLow">Low: ${data.data.min_temp} °C</span>
-      <br>
-      <span id = "temAvg">Average: ${data.data.temp}°C</span>
+      <span id = tempTitle>Typical weather for then is: </span>
+      <ul class="list">
+        <li><span id = "tempHigh">High: ${data.data.max_temp} °C</span></li>
+        <li><span id = "tempLow">Low: ${data.data.min_temp} °C</span></li>
+        <li><span id = "temAvg">Average: ${data.data.temp}°C</span></li>
+      </ul>
     </div>`
   }
   // console.log(weatherHTML)

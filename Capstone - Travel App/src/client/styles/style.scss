@@ -121,16 +121,25 @@ body{
 
             #temperature{
                 //font-size: 0.8em;
-                #temp, #tempFeel, #tempHigh, #tempLow, #temAvg{
-                    //color: #f0d43a;
-                    //font-size: 1em;
+                #tempTitle{
+                    // font-size: 0.8em;
                 }
+                ul{
+                    #temp, #tempFeel, #tempHigh, #tempLow, #temAvg{
+                        //color: #f0d43a;
+                        //font-size: 1em;
+                    }
+
+                }
+                
 
             }
             
 
             #tempIcon{
                 height:1em;
+                vertical-align: middle;
+
 
             }
 
