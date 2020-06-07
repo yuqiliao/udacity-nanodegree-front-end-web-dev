@@ -15,6 +15,35 @@ today = yyyy+'-'+mm+'-'+dd;
 document.getElementById("departureDate").setAttribute("min", today);
 
 
+
+function validateInput(){
+  let isValid = true;
+
+  // get user input of cityName
+  const userCityName = document.querySelector('#city').value;
+  if(userCityName === ""){
+    // console.log(document.querySelector('#city'))
+    document.querySelector('#city').classList.add("buttonWarning")
+    isValid = false;
+  } else {
+    document.querySelector('#city').classList.remove("buttonWarning")
+  }
+
+  //get user inputed date (after the button click event)
+  const userDate = document.getElementById('departureDate').value;
+  if(userDate === ""){
+    // console.log(document.querySelector('#departureDate'))
+    document.querySelector('#departureDate').classList.add("buttonWarning")
+    isValid = false;
+  } else {
+    document.querySelector('#departureDate').classList.remove("buttonWarning")
+  }
+
+  return isValid;
+
+}
+
+
 /* Function to POST combined data to server */
 const postData = async ( url = '', data = {})=>{
     //console.log(data)
@@ -42,7 +71,8 @@ const postData = async ( url = '', data = {})=>{
 function getCityPicture(){
   // get user input of cityName
   const userCityName = document.querySelector('#city').value;
-  //console.log("hi"+userCityName)
+
+  console.log("hi"+userCityName)
   //send userCityName to pixabay API to get a profile pic of the city (process in the server)
   return postData("http://localhost:3000/pixabay", {cityName: userCityName})
 }
@@ -56,6 +86,13 @@ function getGeoInfo(data){
 
 function getWeather(res){
   console.log(res)
+  if (res.data === "user city name returns nothing"){
+    //show warning message on screen
+    document.getElementById('results').innerHTML = "The place can't be recognized, Please try a different one!" 
+    //stop here and return the following custom-made error message in the console
+    throw "user city name returns nothing";
+  }
+
 
   //get user inputed date (after the button click event)
   let userDate = document.getElementById('departureDate').value;
@@ -137,13 +174,25 @@ function displayResult(data){
 }
 
 
-function doEverything(){
-  getCityPicture()
+function displayResults(){
+
+  if(validateInput()){
+    getCityPicture()
     .then(getGeoInfo)
     .then(getWeather)
     .then(displayResult)
+  }
 }
 
-export{ doEverything }
+function removeResults(){
+  document.getElementById('results').innerHTML = "";
+
+  let pictureHTML = `<img src= "https://cdn.pixabay.com/photo/2017/01/16/15/51/hiker-1984421_960_720.jpg" alt = "destination city picture">`
+  document.getElementById('cityPic').innerHTML = pictureHTML 
+
+}
+
+
+export{ displayResults, removeResults }
 
 

@@ -39,53 +39,56 @@ const server = app.listen(port, () => {
     console.log(`this is working! the server is running on localhost: ${port}`)
 });
 
-// // GET method route
-// app.get("/database", function(req, res){
-//     // console.log(req);
-//     res.send(projectData);
-// });
 
-// // POST method route
+////Get picture of the city - using pixabay API (api documentation: https://pixabay.com/api/docs/)
+const picBaseURL = 'https://pixabay.com/api/'
 
-// app.post("/addData", function(req, res){
+//Define getCurrentWeatherData function to GET data from geoname API
+const getPicture = async (baseURL, cityName, apiKey) => {
+    const res = await fetch(baseURL+"?key="+apiKey+"&q="+encodeURIComponent(cityName)+"&image_type=photo&page=1&per_page=3&orientation=horizontal");
+    try {
+        const data = await res.json();
+        // console.log(data)
+        // console.log(data.hits[0])
+        if (data.hits[0] === undefined){
+            //most likely means the city name user entered does not return any matches in the pixabay api (this api's own limiation, e.g. i tried "Mianyang"， it returned {"total":0,"totalHits":0,"hits":[]}). In this case, return a placeholder image
+            return {picURL: "https://cdn.pixabay.com/photo/2017/06/08/09/47/lego-2383096_960_720.jpg", cityName: cityName};
+        } else{
+            return {picURL: data.hits[0].webformatURL, cityName: cityName};
+        }        
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
 
-//     projectData['temperature'] = req.body.temperature;
-//     projectData['date'] = req.body.date;
-//     projectData['userFeeling'] = req.body.userFeeling;
-
-//     res.send(projectData);
-
-//     console.log(projectData);
-// });
-
-
-// ////Get weather data - using OpenWeatherMap API (api documentation: https://openweathermap.org/current)
-// const baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-// //Define getWeatherData function to GET data from OpenWeather API
-
-// const getWeatherData = async (baseURL, zipCode, apiKey) => {
-//     const res = await fetch(baseURL+zipCode+",us&units=imperial"+"&appid="+apiKey);
-//     try {
-//         const data = await res.json();
-//         console.log("this is a test printout from getWeatherData"+data.main.temp);
-//         return data.main.temp;
-//     } catch (error) {
-//         console.log("error:", error);
-//     }
-// }
-
+app.post("/pixabay", function(req, res){
+    const cityName = req.body.cityName
+    //console.log(cityName)
+    // call pixabay API to get picture
+    getPicture(picBaseURL, cityName, pixabayApikey)
+        .then(function(data){
+            res.send(data);
+        })
+});
 
 ////Get geo data - using geonames API (api documentation: http://www.geonames.org/export/geonames-search.html)
-const geoNamesbaseURL = 'http://api.geonames.org/searchJSON?q={'
+const geoNamesbaseURL = 'http://api.geonames.org/searchJSON'
 
 //Define getGeoData function to GET data from geoname API
 const getGeoData = async (baseURL, cityName, apiID, cityURL) => {
-    const res = await fetch(baseURL+cityName+"}&maxRows=1&username="+apiID);
+    const res = await fetch(baseURL+"?q={"+cityName+"}&maxRows=1&username="+apiID);
     try {
         const data = await res.json();
-        //console.log(data)
-        //console.log(data.geonames[0]);
-        return {data: data.geonames[0], cityURL: cityURL};
+        // console.log(data)
+        // console.log(data.geonames[0]);
+        if (data.geonames[0] === undefined){
+             //most likely means the city name user entered does not return any matches in the geoname api (e.g. i tried "aaaaa"， it returned { totalResultsCount: 0, geonames: [] }). In this case, return a data
+             return {data: "user city name returns nothing", cityURL: cityURL};
+        } else {
+            return {data: data.geonames[0], cityURL: cityURL};
+        }
+
+        
     } catch (error) {
         console.log("error:", error);
     }
@@ -96,6 +99,7 @@ app.post("/GeoNames", function(req, res){
     const cityName = req.body.cityName
     const cityURL = req.body.picURL
     console.log(cityName, cityURL)
+    
     // call weather API to get weather data
     getGeoData(geoNamesbaseURL, cityName, geoNamesApiID, cityURL)
         .then(function(data){
@@ -171,27 +175,3 @@ app.post("/WeatherbitNormal", function(req, res){
 
 
 
-////Get picture of the city - using pixabay API (api documentation: https://pixabay.com/api/docs/)
-const picBaseURL = 'https://pixabay.com/api/'
-
-//Define getCurrentWeatherData function to GET data from geoname API
-const getPicture = async (baseURL, cityName, apiKey) => {
-    const res = await fetch(baseURL+"?key="+apiKey+"&q="+encodeURIComponent(cityName)+"&image_type=photo&page=1&per_page=3&orientation=horizontal");
-    try {
-        const data = await res.json();
-        //console.log(data.hits[0].webformatURL)
-        return {picURL: data.hits[0].webformatURL, cityName: cityName};
-    } catch (error) {
-        console.log("error:", error);
-    }
-}
-
-app.post("/pixabay", function(req, res){
-    const cityName = req.body.cityName
-    //console.log(cityName)
-    // call pixabay API to get picture
-    getPicture(picBaseURL, cityName, pixabayApikey)
-        .then(function(data){
-            res.send(data);
-        })
-});
