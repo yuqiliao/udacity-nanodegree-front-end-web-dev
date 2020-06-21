@@ -3,7 +3,6 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
-const openWeatherMapApiKey = process.env.OpenWeatherMap_API_KEY;
 const geoNamesApiID = process.env.geoNamesAPI_ID;
 const weatherbitApikey = process.env.weatherbitAPI_KEY;
 const pixabayApikey = process.env.pixabayAPI_KEY;
