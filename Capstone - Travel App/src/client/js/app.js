@@ -144,7 +144,7 @@ function displayResult(data){
       <ul class="list">
         <li><span id = "temp">Temperature: ${data.data.temp} °C</span></li>
         <li><span id = "tempFeel">Feels like: ${data.data.app_temp} °C</span></li>
-        <li><span id = "tempDes">${data.data.weather.description}<img id = "tempIcon", src = "src/client/media/weatherIcons/${data.data.weather.icon}.png"></span></li>
+        <li><span id = "tempDes">${data.data.weather.description}<img id = "tempIcon", src = "https://www.weatherbit.io/static/img/icons/${data.data.weather.icon}.png"></span></li>
       </ul>
     </div>`
 
