@@ -6,6 +6,7 @@ This project requires me to create a basic travel planning web app that uses mul
 
 The [Geonames API](http://www.geonames.org/export/web-services.html) is used to get the coordinates from the location entered, which is then feed to the [Weatherbit API](https://www.weatherbit.io/api) to get current or predicted weather data. The [Pixabay API](https://pixabay.com/api/docs/) are used to display an image of the location entered.
 
+[This repo](https://github.com/yuqiliao/udacity-nanodegree-front-end-web-dev-capstone-project) contains the similar code of this project that is eventually [deployed](http://udacity-nanodegree.herokuapp.com/).
 
 ## Getting started
 1. Install the required packages (after changing to this directory): 
