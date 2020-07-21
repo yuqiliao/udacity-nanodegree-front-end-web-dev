@@ -11,7 +11,7 @@ The goal of the Front End Web Developer Nanodegree program is to equip learners 
 
 Course syllabus could be found [here](Syllabus.pdf).
 
-# Project Links
+## Project Links
 - [x] [Project 1 - Personal Blog Website](Project%201%20-%20Personal%20Blog%20Website)
 - [x] [Project 2 - Landing Page](Project%202%20-%20Landing%20Page)
 - [x] [Project 3 - Weather Journal App](Project%203%20-%20Weather%20Journal%20App)
