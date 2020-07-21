@@ -1,5 +1,5 @@
 # Udacity Front-End Web Development Nanodegree Projects
-This repository contains the projects I did in completing the nanodegree from Udacity in [front-end web development](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011). The `README.md` file in each project's folder contains more information.
+This repository contains the projects I did in [completing](https://graduation.udacity.com/confirm/QDPPJHUW) the nanodegree from Udacity in [front-end web development](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011). The `README.md` file in each project's folder contains more information.
 
 
 # Project Links
@@ -7,7 +7,7 @@ This repository contains the projects I did in completing the nanodegree from Ud
 - [x] [Project 2 - Landing Page](Project%202%20-%20Landing%20Page)
 - [x] [Project 3 - Weather Journal App](Project%203%20-%20Weather%20Journal%20App)
 - [x] [Project 4 - Evaluate a News Article with Natural Language Processing](Project%204%20-%20Evaluate%20a%20News%20Article%20with%20Natural%20Language%20Processing)
-- [ ] [Capstone - Travel App](Capstone%20-%20Travel%20App)
+- [x] [Capstone - Travel App](Capstone%20-%20Travel%20App)
 
 
 
